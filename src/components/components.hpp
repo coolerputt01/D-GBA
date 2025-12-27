@@ -8,7 +8,7 @@ struct Label{
     sf::Text textDisplay;
     sf::Font font;
 
-    Label(const std::string& txt) : font(FONT_FILE),textDisplay(font){
+    Label(const std::string& txt)  noexcept : font(FONT_FILE),textDisplay(font){
         text = txt;
         textDisplay.setString(text);
     }

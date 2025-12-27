@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "./components/components.hpp"
+#include "./components/roms.hpp"
 
 
 using std::cout;
@@ -12,8 +13,13 @@ int main(){
 
     //FPS counter
     Label text = Label("FPS: ");
+    Rom rom;
     sf::Clock clock;
     float fps = 0.0f;
+    bool rom_loaded = rom.load();
+    if (!rom_loaded){
+        return 1;
+    }
 
 
     while (window.isOpen()){
