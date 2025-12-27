@@ -1,0 +1,179 @@
+🎮 GBA Emulator Roadmap (C++ + SFML)
+
+Use this as a checklist. Go step-by-step — don’t rush. Check items off as you complete them.
+
+🟢 Phase 1 — Setup & Foundation
+
+[ o ] Install a C++ compiler & SFML
+[ o ] Create a new C++ project
+[ o ] Link SFML (window + graphics + system)
+[ o ] Create a window (e.g., 960x640 → 3× scale)
+[ o ] Add a main loop that keeps the window open
+[ o ] Add a simple FPS counter
+
+Goal: A blank working SFML window sized for GBA (240x160 scaled).
+
+🟢 Phase 2 — Core Structure (Bus & Memory Map)
+
+[ ] Create a Bus / Memory class
+[ ] Implement 32-bit reads + writes
+[ ] Implement GBA memory map:
+    [ ] BIOS (0x00000000 – 0x00003FFF)
+    [ ] On-board WRAM (256KB)
+    [ ] On-chip WRAM (32KB)
+    [ ] I/O Registers
+    [ ] Palette RAM
+    [ ] VRAM
+    [ ] OAM
+    [ ] Game Pak ROM
+[ ] Add placeholders for:
+    [ ] CPU
+    [ ] GPU (graphics)
+    [ ] DMA
+    [ ] Timers
+    [ ] Input
+    [ ] Audio
+
+Goal: CPU can safely read/write memory regions.
+
+🟡 Phase 3 — CPU (ARM7TDMI)
+
+[ ] Create CPU class
+[ ] Add registers:
+    [ ] R0–R15
+    [ ] PC (R15)
+    [ ] CPSR / SPSR
+    [ ] Banked registers for CPU modes
+[ ] Support CPU modes:
+    [ ] User
+    [ ] FIQ
+    [ ] IRQ
+    [ ] Supervisor
+    [ ] Abort
+    [ ] Undefined
+    [ ] System
+[ ] Add Reset() function
+[ ] Add fetch/decode/execute
+[ ] Implement ARM instruction set (32-bit)
+[ ] Implement Thumb instruction set (16-bit)
+[ ] Implement pipeline behavior
+[ ] Track cycle counts
+[ ] Test with simple programs
+
+Goal: CPU runs ARM + Thumb instructions correctly.
+
+🟡 Phase 4 — Cartridge Loading
+
+[ ] Load .gba ROM file
+[ ] Map to Game Pak ROM memory region
+[ ] Handle wait states
+[ ] Stub save memory (SRAM/Flash/EEPROM)
+
+Goal: CPU can execute ROM code.
+
+🟠 Phase 5 — GPU (Graphics System)
+
+[ ] Create GPU class
+[ ] Implement VRAM + registers
+[ ] Implement palette RAM
+[ ] Support display modes:
+    [ ] Mode 0 (tilemap)
+    [ ] Mode 3 (bitmap)
+    [ ] Mode 4 (indexed bitmap)
+    [ ] Mode 5 (small bitmap)
+[ ] Render scanlines to framebuffer (240x160)
+[ ] Convert framebuffer to SFML texture
+[ ] Display frame to window
+
+Goal: First visible graphics output.
+
+🟠 Phase 6 — Timing & Sync
+
+[ ] Emulate scanline timing
+[ ] Handle H-blank + V-blank
+[ ] Trigger IRQ properly
+[ ] Sync CPU + GPU cycles
+
+Goal: Stable video timing.
+
+🔵 Phase 7 — DMA & Timers
+
+[ ] Implement 4 DMA channels
+[ ] Handle start triggers
+[ ] Stop/start rules
+[ ] Implement 4 hardware timers
+
+Goal: Games load graphics correctly.
+
+🔵 Phase 8 — Input
+
+[ ] Implement keypad register
+[ ] Map keyboard to GBA buttons
+
+Goal: Player input works.
+
+🟣 Phase 9 — Audio
+
+[ ] Implement sound registers
+[ ] Square channels
+[ ] Wave channel
+[ ] Noise channel
+[ ] Direct Sound A/B
+[ ] Output via SFML
+
+Goal: Sound playback.
+
+🟤 Phase 10 — Polish & Extras
+
+[ ] Save states
+[ ] Save files (SRAM/Flash/EEPROM)
+[ ] Debugger:
+    [ ] CPU registers
+    [ ] Memory viewer
+    [ ] Breakpoints
+[ ] Instruction trace logs
+[ ] Config menu
+[ ] Fast-forward
+[ ] Frame limiter (~59.73 FPS)
+
+🎯 Success Milestones
+
+[ ] CPU passes ARM/Thumb test ROMs
+[ ] First pixels render
+[ ] BIOS intro runs
+[ ] First commercial ROM boots
+[ ] Input works
+[ ] Audio works
+
+🧠 General Rules While Building
+
+[ ] Test each tiny part alone
+[ ] Log CPU instructions
+[ ] Verify with documentation
+[ ] Fix bugs early
+[ ] Keep code clean & readable
+[ ] Add beginner-level comments
+
+📚 Topics to Learn
+
+[ ] ARM7TDMI CPU basics
+[ ] ARM vs Thumb mode
+[ ] Memory-mapped I/O
+[ ] GBA GPU modes
+[ ] DMA behavior
+[ ] Save memory types
+[ ] Emulator timing
+[ ] Bitwise operations
+
+🏁 Final Goal
+
+A working GBA emulator that:
+
+✔ Loads ROMs
+✔ Runs ARM/Thumb CPU code
+✔ Renders 240×160 graphics
+✔ Handles input
+✔ Plays sound
+✔ Runs near 60 FPS
+
+And you understand how everything works 🙂
