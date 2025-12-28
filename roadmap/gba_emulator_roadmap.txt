@@ -15,17 +15,17 @@ Goal: A blank working SFML window sized for GBA (240x160 scaled).
 
 🟢 Phase 2 — Core Structure (Bus & Memory Map)
 
-[ ] Create a Bus / Memory class
-[ ] Implement 32-bit reads + writes
-[ ] Implement GBA memory map:
+[ o ] Create a Bus / Memory class
+[ o ] Implement 32-bit reads + writes
+[ o ] Implement GBA memory map:
     [ ] BIOS (0x00000000 – 0x00003FFF)
-    [ ] On-board WRAM (256KB)
-    [ ] On-chip WRAM (32KB)
+    [ o ] On-board WRAM (256KB)
+    [ o ] On-chip WRAM (32KB)
     [ ] I/O Registers
     [ ] Palette RAM
-    [ ] VRAM
+    [ o ] VRAM
     [ ] OAM
-    [ ] Game Pak ROM
+    [ o ] Game Pak ROM
 [ ] Add placeholders for:
     [ ] CPU
     [ ] GPU (graphics)

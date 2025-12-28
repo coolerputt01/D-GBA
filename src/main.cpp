@@ -1,7 +1,9 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <cstdint>
+#include <cassert>
 #include "./components/components.hpp"
-#include "./components/roms.hpp"
+#include "./components/bus.hpp"
 
 
 using std::cout;
@@ -13,13 +15,17 @@ int main(){
 
     //FPS counter
     Label text = Label("FPS: ");
-    Rom rom;
+    Bus bus;
     sf::Clock clock;
     float fps = 0.0f;
-    bool rom_loaded = rom.load();
-    if (!rom_loaded){
+    auto rom_loaded = bus.rom.load();
+    if (rom_loaded == 0 || rom_loaded == 3 ){
         return 1;
     }
+    bus.write8(0x02000000,0x12);
+    uint8_t test = bus.read8(0x02000000);
+
+    std::cout<<"Test value: "<<test<<"\n";
 
 
     while (window.isOpen()){

@@ -6,15 +6,22 @@
 #include <iostream>
 #include "../config/config.hpp"
 
+enum ROM_STATE {
+    ROM_FAILED,
+    ROM_LOADED,
+    ROM_UNLOADED
+};
+
 struct Rom {
     std::vector<uint8_t> rom_data;
+    ROM_STATE rom_state = ROM_STATE::ROM_UNLOADED;
 
-    bool load(const char* path = TEST_ROM){
+    ROM_STATE load(const char* path = TEST_ROM){
         std::ifstream file(path,std::ios::binary | std::ios::ate);
 
         if(!file.is_open()){
             std::cerr<<"An error occured while opening ROMs\n";
-            return false;
+            rom_state = ROM_STATE::ROM_FAILED;
         }
 
         std::streamsize fileBitSize = file.tellg();
@@ -23,11 +30,13 @@ struct Rom {
 
         if(!file.read(static_cast<char *>(static_cast<void*>(rom_data.data())),fileBitSize)){
             std::cerr << "An error occured while reading from file to buffer\n";
-            return false;
+            rom_state = ROM_STATE::ROM_FAILED;
         }
 
         std::cout<<"Rom sucessfully loaded\n"<<"Bits: "<<fileBitSize<<std::endl;
-        return true;
+        rom_state = ROM_STATE::ROM_LOADED;
+
+        return ROM_STATE::ROM_LOADED;
 
     }
 };
