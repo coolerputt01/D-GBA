@@ -18,13 +18,13 @@ Goal: A blank working SFML window sized for GBA (240x160 scaled).
 [ o ] Create a Bus / Memory class
 [ o ] Implement 32-bit reads + writes
 [ o ] Implement GBA memory map:
-    [ ] BIOS (0x00000000 – 0x00003FFF)
+    [ o ] BIOS (0x00000000 – 0x00003FFF)
     [ o ] On-board WRAM (256KB)
     [ o ] On-chip WRAM (32KB)
-    [ ] I/O Registers
-    [ ] Palette RAM
+    [ o ] I/O Registers
+    [ o ] Palette RAM
     [ o ] VRAM
-    [ ] OAM
+    [ o ] OAM
     [ o ] Game Pak ROM
 [ ] Add placeholders for:
     [ ] CPU

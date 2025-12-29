@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <cassert>
 #include "./components/components.hpp"
-#include "./components/bus.hpp"
+#include "./components/cpu.hpp"
 
 
 using std::cout;
@@ -15,17 +15,22 @@ int main(){
 
     //FPS counter
     Label text = Label("FPS: ");
+    CPU cpu;
     Bus bus;
+    cpu.registers[0] = 12;
+    cpu.registers[4] = 22;
+    cpu.registers[15] = 0x02000000;
     sf::Clock clock;
     float fps = 0.0f;
     auto rom_loaded = bus.rom.load();
-    if (rom_loaded == 0 || rom_loaded == 3 ){
+    cpu.bus = &bus;
+    if(rom_loaded == 0 || rom_loaded == 3 ){
         return 1;
     }
-    bus.write8(0x02000000,0x12);
-    uint8_t test = bus.read8(0x02000000);
-
-    std::cout<<"Test value: "<<test<<"\n";
+    bus.write32(0x02000000, 0xE2800007);
+    cpu.step();
+    std::cout << "R0 = " << cpu.registers[0] << "\n";
+    std::cout << "PC = " << std::hex << cpu.registers[15] << "\n";
 
 
     while (window.isOpen()){
