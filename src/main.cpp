@@ -17,9 +17,10 @@ int main(){
     Label text = Label("FPS: ");
     CPU cpu;
     Bus bus;
-    cpu.registers[0] = 12;
+    cpu.registers[0] = 10;
     cpu.registers[4] = 22;
     cpu.registers[15] = 0x02000000;
+    cpu.flags = 0;
     sf::Clock clock;
     float fps = 0.0f;
     auto rom_loaded = bus.rom.load();
@@ -29,6 +30,7 @@ int main(){
     }
     bus.write32(0x02000000, 0xE2800007);
     cpu.step();
+    cpu.printFlags();
     std::cout << "R0 = " << cpu.registers[0] << "\n";
     std::cout << "PC = " << std::hex << cpu.registers[15] << "\n";
 

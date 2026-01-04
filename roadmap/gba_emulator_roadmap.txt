@@ -26,8 +26,8 @@ Goal: A blank working SFML window sized for GBA (240x160 scaled).
     [ o ] VRAM
     [ o ] OAM
     [ o ] Game Pak ROM
-[ ] Add placeholders for:
-    [ ] CPU
+[ o ] Add placeholders for:
+    [ o ] CPU
     [ ] GPU (graphics)
     [ ] DMA
     [ ] Timers
@@ -38,11 +38,11 @@ Goal: CPU can safely read/write memory regions.
 
 🟡 Phase 3 — CPU (ARM7TDMI)
 
-[ ] Create CPU class
-[ ] Add registers:
-    [ ] R0–R15
-    [ ] PC (R15)
-    [ ] CPSR / SPSR
+[ o ] Create CPU class
+[ o ] Add registers:
+    [ o ] R0–R15
+    [ o ] PC (R15)
+    [ o ] CPSR / SPSR
     [ ] Banked registers for CPU modes
 [ ] Support CPU modes:
     [ ] User

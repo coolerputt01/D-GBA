@@ -1,6 +1,9 @@
 #pragma once
 #include <cstdint>
 #include "bus.hpp"
+#include <format>
+#include <iostream>
+#include <sstream>
 
 enum FLAG {
     FLAG_N = 1U << 31,
@@ -79,6 +82,7 @@ class CPU {
         switch(instructionClass){
             case 0b001:
             case 0b000:
+                execute(instruction);
                 break;
             case 0b010:
             case 0b011:
@@ -86,6 +90,31 @@ class CPU {
             default:
                 break;
         }
+    }
+
+    void setFlags(bool instructionFlags,uint32_t register_input,uint32_t register_destination,uint32_t flexible_constant){
+        uint64_t result = static_cast<uint64_t>(registers[register_input] + flexible_constant);
+        if(instructionFlags){
+            flags = 0;
+            if (registers[register_destination] == 0){
+                flags |= FLAG_Z;
+            }
+            if(registers[register_destination] & 0x80000000){
+                flags |= FLAG_N;
+            }
+            if(result >> 32){
+                flags |= FLAG_C;
+            }
+            if((~(registers[register_input] ^ flexible_constant) & (registers[register_input] ^ registers[register_destination])) & 0x80000000){
+                flags |= FLAG_V;
+            }
+        }
+    }
+
+    void printFlags(){
+        std::ostringstream result;
+        result << "Flags:\nN=" << ((flags & FLAG_N) ? 1 : 0) << "\nC=" << ((flags & FLAG_C) ? 1 : 0) << "\nV=" << ((flags & FLAG_V) ? 1 : 0) << "\nZ=" << ((flags & FLAG_Z) ? 1 : 0) << "\n";
+        std::cout<<result.str();
     }
 
 
@@ -98,8 +127,10 @@ class CPU {
     
         if(intermmediate){
             uint32_t bit8_intermmediate_rot = (instruction & 0xFF);
-            uint32_t rotating_amount = ((instruction >> 8) & 0xF) * 2;
+            uint32_t rotating_amount = (((instruction >> 8) & 0xF) * 2) & 31;
             flexible_constant = (bit8_intermmediate_rot >> rotating_amount) | (bit8_intermmediate_rot << (32 - rotating_amount));
+        }else {
+            flexible_constant = registers[instruction & 0xF];
         }
 
         uint32_t register_input = (instruction >> 16) & 0xF;
@@ -109,6 +140,7 @@ class CPU {
         {
         case 0x4:
             registers[register_destination] = registers[register_input] + flexible_constant;
+            setFlags(instruction_flags,register_input,register_destination,flexible_constant);
             break;
         
         default:
